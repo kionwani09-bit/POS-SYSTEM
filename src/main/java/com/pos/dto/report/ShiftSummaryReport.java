@@ -1,0 +1,19 @@
+package com.pos.dto.report;
+import java.math.BigDecimal;
+import java.time.Instant;
+public record ShiftSummaryReport(
+    long shiftId,
+    String cashierName,
+    Instant startTime,
+    Instant endTime,
+    int totalTransactions,
+    BigDecimal cashRevenue,
+    BigDecimal cardRevenue,
+    BigDecimal giftCardRevenue,
+    BigDecimal totalDiscounts,
+    BigDecimal totalRefunds,
+    BigDecimal openingCash,
+    BigDecimal expectedClosingCash,
+    BigDecimal actualClosingCash,
+    BigDecimal cashVariance
+) {}
