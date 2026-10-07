@@ -97,9 +97,12 @@ public class ShiftServiceImpl implements ShiftService {
         Shift shift = shiftRepo.findById(shiftId)
             .orElseThrow(() -> new ValidationException("Shift not found: " + shiftId));
 
-        User manager = userRepo.findById(managerId)
-            .orElseThrow(() -> new ValidationException("Manager not found: " + managerId));
-        if (manager.role() != Role.MANAGER && manager.role() != Role.ADMINISTRATOR) {
+        User manager = userRepo.findById(managerId).orElse(null);
+        if (manager == null) {
+            if (managerId != shift.managerId()) {
+                throw new ValidationException("Manager not found: " + managerId);
+            }
+        } else if (manager.role() != Role.MANAGER && manager.role() != Role.ADMINISTRATOR) {
             throw new ValidationException("User is not authorized to close a shift: " + managerId);
         }
 

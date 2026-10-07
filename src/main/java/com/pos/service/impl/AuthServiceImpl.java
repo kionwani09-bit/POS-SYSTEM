@@ -72,8 +72,11 @@ public class AuthServiceImpl implements AuthService {
             throw new ValidationException("Invalid username or password. Attempts: " + attempts);
         }
 
-        // Successful login — reset attempts
-        userRepo.updateLoginState(user.id(), false, 0, Instant.now());
+        // Successful login — reset attempts and expose the refreshed login timestamp.
+        Instant loginTime = Instant.now();
+        userRepo.updateLoginState(user.id(), false, 0, loginTime);
+        user = new User(user.id(), user.username(), user.passwordHash(), user.role(),
+            false, 0, loginTime, user.createdAt());
 
         long sessionId = sessionRepo.save(user.id());
         SessionContext.set(user, sessionId);

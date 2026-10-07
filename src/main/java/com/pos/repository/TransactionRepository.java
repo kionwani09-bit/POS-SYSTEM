@@ -4,7 +4,11 @@ import com.pos.db.DatabaseManager;
 import com.pos.domain.TransactionStatus;
 
 import java.math.BigDecimal;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -49,7 +53,8 @@ public class TransactionRepository {
         String sql = "SELECT * FROM transactions "
             + "WHERE CAST(created_at AS DATE) BETWEEN ? AND ? AND status='COMPLETED'";
         try (Connection c = db.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setDate(1, Date.valueOf(from)); ps.setDate(2, Date.valueOf(to));
+            ps.setDate(1, java.sql.Date.valueOf(from));
+            ps.setDate(2, java.sql.Date.valueOf(to));
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) result.add(rowToMap(rs));
             }

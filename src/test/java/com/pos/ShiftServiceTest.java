@@ -58,10 +58,10 @@ class ShiftServiceTest {
 
         ShiftServiceImpl service = new ShiftServiceImpl(DatabaseManager.getInstance(), shiftRepo, userRepo, transactionRepo, auditService);
 
-        ShiftSummaryReport report = service.closeShift(7L, new BigDecimal("200.00"), 20L);
+        ShiftSummaryReport report = service.closeShift(7L, new BigDecimal("220.00"), 20L);
 
-        assertThat(report.expectedClosingCash()).isEqualByComparingTo("180.00");
+        assertThat(report.expectedClosingCash()).isEqualByComparingTo("200.00");
         assertThat(report.cashVariance()).isEqualByComparingTo("20.00");
-        verify(shiftRepo).close(eq(7L), eq(new BigDecimal("180.00")), eq(new BigDecimal("200.00")), eq(new BigDecimal("20.00")));
+        verify(shiftRepo).close(eq(7L), eq(new BigDecimal("200.00")), eq(new BigDecimal("220.00")), eq(new BigDecimal("20.00")));
     }
 }

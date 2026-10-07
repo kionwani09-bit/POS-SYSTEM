@@ -45,7 +45,7 @@ public class ReportServiceImpl implements ReportService {
             BigDecimal tax = BigDecimal.ZERO; BigDecimal discount = BigDecimal.ZERO;
 
             try (PreparedStatement ps = c.prepareStatement(sql)) {
-                ps.setDate(1, Date.valueOf(date));
+                ps.setDate(1, java.sql.Date.valueOf(date));
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
                         totalTxn = rs.getInt("total_txn");
@@ -58,7 +58,7 @@ public class ReportServiceImpl implements ReportService {
 
             BigDecimal refunds = BigDecimal.ZERO;
             try (PreparedStatement ps = c.prepareStatement(refundSql)) {
-                ps.setDate(1, Date.valueOf(date));
+                ps.setDate(1, java.sql.Date.valueOf(date));
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) refunds = rs.getBigDecimal("refunds");
                 }
@@ -82,7 +82,8 @@ public class ReportServiceImpl implements ReportService {
 
         List<ProductSalesReport.ProductSalesLine> lines = new ArrayList<>();
         try (Connection c = db.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setDate(1, Date.valueOf(from)); ps.setDate(2, Date.valueOf(to));
+            ps.setDate(1, java.sql.Date.valueOf(from));
+            ps.setDate(2, java.sql.Date.valueOf(to));
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     lines.add(new ProductSalesReport.ProductSalesLine(
@@ -114,7 +115,9 @@ public class ReportServiceImpl implements ReportService {
         try (Connection c = db.getConnection()) {
             String name = ""; int totalTxn = 0; BigDecimal revenue = BigDecimal.ZERO;
             try (PreparedStatement ps = c.prepareStatement(sql)) {
-                ps.setLong(1, cashierId); ps.setDate(2, Date.valueOf(from)); ps.setDate(3, Date.valueOf(to));
+                ps.setLong(1, cashierId);
+                ps.setDate(2, java.sql.Date.valueOf(from));
+                ps.setDate(3, java.sql.Date.valueOf(to));
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
                         name = rs.getString("username");
@@ -125,7 +128,9 @@ public class ReportServiceImpl implements ReportService {
             }
             BigDecimal refunds = BigDecimal.ZERO;
             try (PreparedStatement ps = c.prepareStatement(refundSql)) {
-                ps.setLong(1, cashierId); ps.setDate(2, Date.valueOf(from)); ps.setDate(3, Date.valueOf(to));
+                ps.setLong(1, cashierId);
+                ps.setDate(2, java.sql.Date.valueOf(from));
+                ps.setDate(3, java.sql.Date.valueOf(to));
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) refunds = rs.getBigDecimal("refunds");
                 }

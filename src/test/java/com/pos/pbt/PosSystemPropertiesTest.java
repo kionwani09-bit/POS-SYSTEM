@@ -62,7 +62,7 @@ class PosSystemPropertiesTest {
 
     @Provide
     Arbitrary<List<CartLineItem>> lineItems() {
-        return Arbitraries.integers().between(1, 5).list().ofSize(1, 5).map(list -> {
+        return Arbitraries.integers().between(1, 5).list().ofMinSize(1).ofMaxSize(5).map(list -> {
             List<CartLineItem> items = new ArrayList<>();
             for (int i = 0; i < list.size(); i++) {
                 int qty = i + 1;
@@ -75,7 +75,7 @@ class PosSystemPropertiesTest {
 
     @Provide
     Arbitrary<List<AppliedDiscount>> discounts() {
-        return Arbitraries.integers().between(0, 3).list().ofSize(0, 3).map(list -> {
+        return Arbitraries.integers().between(0, 3).list().ofMinSize(0).ofMaxSize(3).map(list -> {
             List<AppliedDiscount> result = new ArrayList<>();
             for (int i = 0; i < list.size(); i++) {
                 result.add(new AppliedDiscount(i + 1L, "DISC" + i, DiscountType.PERCENTAGE,
@@ -87,7 +87,7 @@ class PosSystemPropertiesTest {
 
     @Provide
     Arbitrary<List<CartLineItem>> taxExemptItems() {
-        return Arbitraries.integers().between(1, 3).list().ofSize(1, 3).map(list -> {
+        return Arbitraries.integers().between(1, 3).list().ofMinSize(1).ofMaxSize(3).map(list -> {
             List<CartLineItem> items = new ArrayList<>();
             for (int i = 0; i < list.size(); i++) {
                 items.add(new CartLineItem(i + 1L, "Tax Free " + i, "FREE-" + i,

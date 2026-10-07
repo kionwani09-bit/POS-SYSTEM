@@ -208,8 +208,8 @@ public class CartPanel extends JPanel {
 
         TransactionSummary summary = transactionService.calculateTotals(1L);
         subtotalLabel.setText(summary.subtotal().toPlainString());
-        taxLabel.setText(summary.tax().toPlainString());
-        discountLabel.setText(summary.discount().toPlainString());
+        taxLabel.setText(summary.totalTax().toPlainString());
+        discountLabel.setText(summary.totalDiscount().toPlainString());
         totalLabel.setText(summary.grandTotal().toPlainString());
     }
 }
